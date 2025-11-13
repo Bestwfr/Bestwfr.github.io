@@ -1,9 +1,31 @@
 import TargetCursor from "./TargetCursor";
 import SplitText from "./SplitText.tsx";
-import FloatingWorkCards from "./FloatingWorkCards";
 import "./App.css";
+import ProjectWindow from "./components/ProjectWindow";
+import { useState } from "react";
+
+const works = [
+    {
+        title: "Too Many Bugs",
+        description: "เกมแนว Rouge-like ผสม Tower Defense Multiplayer ที่ผมกำลังทำการพัฒนาอยู่ด้วยทักษะการเขียนโปรแกรมแบบ OOP",
+        img: "/images/OOP1.png",
+        skills: ["Advance Programming", "Game Algorithms", "System Design"],
+        tools: [
+            { name: "Unity", icon: <i className="fab fa-unity"></i> },
+            { name: "C#", icon: <i className="fas fa-code"></i> },
+        ],
+        links: [
+            { label: "Too-Many-Bugs", url: "https://github.com/Bestwfr/Too-Many-Bugs", icon: <i className="fab fa-github"></i> },
+            { label: "Class Diagram", url: "https://drive.google.com/file/d/1mJTyxZbUXbilML3ASzsZSwcrw6J9i98b/view?usp=sharing", icon: <i className="fas fa-file-alt"></i> },
+        ]
+    },
+    // ...other projects
+];
 
 export default function App() {
+    // Move useState INSIDE the component function!
+    const [testOpen, setTestOpen] = useState(false);
+
     return (
         <>
             <TargetCursor />
@@ -32,7 +54,14 @@ export default function App() {
                     </p>
                 </section>
                 <main className="site-main">
-                    <FloatingWorkCards />
+                    <button onClick={() => setTestOpen(true)} style={{margin: "2em", padding: "1em 2em"}}>
+                        TEST PROJECT MODAL
+                    </button>
+                    <ProjectWindow
+                        open={testOpen}
+                        onClose={() => setTestOpen(false)}
+                        project={works[0]}
+                    />
                 </main>
                 <footer className="site-footer">
                     <div className="footer-inner">

@@ -83,9 +83,19 @@ body {
     min-height: 150px;
     font-size: 1.12rem;
     text-align: center;
-    margin-top: 1.5rem;
     border: 2px solid #2a2a2c;
     transition: box-shadow 0.18s;
+    position: absolute;
+    will-change: transform;
+}
+
+.work-preview-img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 /* Footer + social icons */

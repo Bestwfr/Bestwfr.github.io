@@ -1,0 +1,17 @@
+﻿# Ignore all .idea folder contents except for code style and shared configs (optional)
+.idea/
+
+# JetBrains workspace files
+*.iml
+*.iws
+
+# Exclude build and output folders (common for many languages)
+out/
+build/
+
+# Common JetBrains ignored files already covered:
+.shelf/
+workspace.xml
+httpRequests/
+dataSources/
+dataSources.local.xml

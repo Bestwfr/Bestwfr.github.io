@@ -21,32 +21,48 @@ export default function FloatingWorkCards() {
         const cards = cardsRef.current.filter(card => card !== null);
         if (cards.length === 0) return;
 
-        // Get safe boundaries (avoid header, footer, and screen edges)
+        // Get safe boundaries for floating animation (middle area of screen)
         const getSafeBounds = (card: HTMLDivElement) => {
-            const header = document.querySelector('.site-header');
-            const footer = document.querySelector('.site-footer');
-            const intro = document.querySelector('.intro');
+            const margin = 80; // pixels from edges
+            const centerAreaHeight = window.innerHeight * 0.5; // Use middle 50% of screen height
+            const centerAreaWidth = window.innerWidth * 0.6; // Use middle 60% of screen width
             
-            const headerRect = header?.getBoundingClientRect();
-            const footerRect = footer?.getBoundingClientRect();
-            const introRect = intro?.getBoundingClientRect();
-            
-            const margin = 60; // pixels from edges
-            const headerBottom = headerRect ? headerRect.bottom + 20 : 240;
-            const introBottom = introRect ? introRect.bottom + 30 : 400;
-            const footerTop = footerRect ? footerRect.top : window.innerHeight;
-            
-            // Use intro bottom if it's lower than header
-            const topBoundary = Math.max(headerBottom, introBottom);
-            const bottomBoundary = footerTop - 120; // 120px clearance from footer
+            const topBoundary = (window.innerHeight - centerAreaHeight) / 2;
+            const bottomBoundary = topBoundary + centerAreaHeight;
+            const leftBoundary = (window.innerWidth - centerAreaWidth) / 2;
+            const rightBoundary = leftBoundary + centerAreaWidth;
             
             return {
-                minX: margin,
-                maxX: window.innerWidth - card.offsetWidth - margin,
-                minY: topBoundary,
-                maxY: bottomBoundary - card.offsetHeight
+                minX: Math.max(leftBoundary, margin),
+                maxX: Math.min(rightBoundary, window.innerWidth - margin) - card.offsetWidth,
+                minY: Math.max(topBoundary, margin),
+                maxY: Math.min(bottomBoundary, window.innerHeight - margin) - card.offsetHeight
             };
         };
+
+        // Initialize cards in the middle area
+        cards.forEach((card, index) => {
+            const bounds = getSafeBounds(card);
+            const centerX = (bounds.minX + bounds.maxX) / 2;
+            const centerY = (bounds.minY + bounds.maxY) / 2;
+            
+            // Offset slightly for each card so they don't overlap initially
+            const offsetX = (index - 1) * 50; // Spread cards horizontally
+            const offsetY = (index - 1) * 30; // Spread cards vertically
+            
+            gsap.set(card, {
+                x: centerX + offsetX,
+                y: centerY + offsetY,
+                opacity: 0
+            });
+            
+            // Fade in the card
+            gsap.to(card, {
+                opacity: 1,
+                duration: 0.8,
+                delay: index * 0.2
+            });
+        });
 
         // Floating animation with boundary constraints for a single card
         const animateFloat = (card: HTMLDivElement) => {
@@ -65,7 +81,7 @@ export default function FloatingWorkCards() {
             
             const randomX = gsap.utils.random(bounds.minX, bounds.maxX);
             const randomY = gsap.utils.random(bounds.minY, bounds.maxY);
-            const duration = gsap.utils.random(4, 7);
+            const duration = gsap.utils.random(5, 8);
             
             gsap.to(card, {
                 x: randomX,
@@ -78,7 +94,7 @@ export default function FloatingWorkCards() {
 
         // Start animation for each card with a staggered delay
         cards.forEach((card, index) => {
-            gsap.delayedCall(1 + index * 0.5, () => animateFloat(card));
+            gsap.delayedCall(1.5 + index * 0.3, () => animateFloat(card));
         });
 
         // Handle window resize to update boundaries

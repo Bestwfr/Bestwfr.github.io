@@ -26,17 +26,18 @@ body {
 
 .site-header {
     text-align: center;
-    padding: 2rem 1rem 1.2rem;
+    padding: 4rem 1rem 1.2rem;
     border-bottom: 1px solid #232427;
 }
 .site-title {
-    font-size: 2.1rem;
+    margin-top: -1rem;
+    font-size: 5.5rem;
     font-family: var(--font-main);
     color: #dbe4fa;
 }
 .site-desc {
-    margin-top: 0.4rem;
-    font-size: 1.1rem;
+    margin-top: -3rem;
+    font-size: 1.4rem;
     color: var(--accent);
 }
 
@@ -54,6 +55,7 @@ body {
     margin: 0 0 0.35rem 0;
     font-size: 1.25rem;
     color: #e1c397;
+    font-weight: 400;
 }
 .intro-text {
     margin: 0;
@@ -61,17 +63,16 @@ body {
     color: #fff;
 }
 
-/* Demo card for .cursor-target effect */
 .site-main {
     flex: 1 0 auto;
-    width: 100%;
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
 }
+
 .work-card {
     background: #252528;
     border-radius: 18px;
@@ -104,24 +105,40 @@ body {
 }
 .icon-row {
     display: flex;
-    gap: 12px;
+    gap: 16px;
 }
 .icon-circle {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 30%;
     background: var(--icon-bg);
     text-decoration: none;
     transition: background 150ms, transform 120ms;
     box-shadow: 0 1px 3px #10141a40;
 }
+
+.icon-circle i,
+.icon-circle svg {
+    font-size: 22px;
+    color: #fff !important;
+    fill: #fff !important;
+    transition: color 160ms;
+}
+.icon-circle:visited i {
+    color: #fff !important;
+}
+.icon-circle:hover i {
+    color: #fff !important;
+}
+
 .icon-circle:hover {
     background: var(--icon-hover);
-    transform: translateY(-2px);
+    transform: scale(1.1);
 }
+
 .footer-copy {
     font-size: 1rem;
     color: #ececec;
